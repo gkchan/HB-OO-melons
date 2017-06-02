@@ -1,3 +1,5 @@
+import random
+
 """Classes for melon orders."""
 
 
@@ -11,10 +13,17 @@ class AbstractMelonOrder(object):
         self.qty = qty
         self.shipped = False
 
+    def get_base_price(self):
+        """Splurge pricing: chooses value between 5 and 9 for melon price"""
+
+        base_price = random.randint(5, 9)
+
+        return base_price
+
     def get_total(self):
         """Calculate price, including tax."""
 
-        base_price = 5
+        base_price = self.get_base_price()
 
         if self.species == "christmas":
             base_price *= 1.5
@@ -27,6 +36,7 @@ class AbstractMelonOrder(object):
         """Record the fact than an order has been shipped."""
 
         self.shipped = True
+
 
 
 class DomesticMelonOrder(AbstractMelonOrder):
@@ -76,12 +86,6 @@ class GovernmentMelonOrder(AbstractMelonOrder):
 
     passed_inspection = False
     tax = 0
-
-    def get_total(self):
-
-        total = super(GovernmentMelonOrder, self).get_total()
-
-        return total
 
     def mark_inspection(self, passed):
         """Record that an inspection has passed"""
