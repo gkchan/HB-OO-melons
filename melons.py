@@ -1,4 +1,5 @@
 import random
+import datetime
 
 """Classes for melon orders."""
 
@@ -18,16 +19,25 @@ class AbstractMelonOrder(object):
 
         base_price = random.randint(5, 9)
 
+        # Adding Rush Hour Prices: use datetime library.
+        # Get time and weekday from datetime.datetime/date.method.
+        # Use the if statement to check and add charge:
+        # Add time zone to get correct time?
+        # https://docs.python.org/2/library/datetime.html
+        # http://fellowship.hackbrightacademy.com/materials/f18k/exercises/oo-melons/further-study.html
+
+            # if  and:
+            #     base_price += 4
+
+        if self.species == "christmas":
+            base_price *= 1.5
+
         return base_price
 
     def get_total(self):
         """Calculate price, including tax."""
 
         base_price = self.get_base_price()
-
-        if self.species == "christmas":
-            base_price *= 1.5
-        
         total = (1 + self.tax) * self.qty * base_price
 
         return total
