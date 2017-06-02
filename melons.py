@@ -16,7 +16,7 @@ class AbstractMelonOrder(object):
 
         base_price = 5
 
-        if self.species == "Christmas":
+        if self.species == "christmas":
             base_price *= 1.5
         
         total = (1 + self.tax) * self.qty * base_price
@@ -61,6 +61,7 @@ class InternationalMelonOrder(AbstractMelonOrder):
         return self.country_code
 
     def get_total(self):
+        """Add flat fee to small international orders"""
 
         total = super(InternationalMelonOrder, self).get_total()
 
@@ -70,5 +71,21 @@ class InternationalMelonOrder(AbstractMelonOrder):
         return total
 
 
+class GovernmentMelonOrder(AbstractMelonOrder):
+    """A government melon order"""
 
-# christmas_melon = AbstractMelonOrder("christmas", )
+    passed_inspection = False
+    tax = 0
+
+    def get_total(self):
+
+        total = super(GovernmentMelonOrder, self).get_total()
+
+        return total
+
+    def mark_inspection(self, passed):
+        """Record that an inspection has passed"""
+
+        self.passed_inspection = passed
+
+
